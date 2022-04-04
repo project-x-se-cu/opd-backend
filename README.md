@@ -72,9 +72,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 Nest is [MIT licensed](LICENSE).
 
-## Example cURL
+## Swagger
 
-```bash
-# 1. get medicine list
-curl --location --request GET 'localhost:3000/medicines?name=Para'
-```
+http://localhost:3000/api
+
