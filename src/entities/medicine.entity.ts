@@ -12,4 +12,4 @@ export class Medicine {
   weight?: Number;
 }
 
-export const MedicineSchema = SchemaFactory.createForClass(Medicine);
+export const MedicineEntity = SchemaFactory.createForClass(Medicine);

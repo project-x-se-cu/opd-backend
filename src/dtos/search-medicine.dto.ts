@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
-export class MedicineSearchDto {
+export class SearchMedicineDto {
 
     @ApiPropertyOptional({
         name: 'name'

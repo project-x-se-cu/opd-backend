@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Medicine, MedicineDocument } from './medicine.schema';
+import { Medicine, MedicineDocument } from '../entities/medicine.entity';
 
 @Injectable()
 export class MedicineService {
@@ -15,7 +15,6 @@ export class MedicineService {
         { name: { '$regex': name, '$options': 'i' } }
       ).exec();
     }
-    console.log(name)
     return await this.model.find().exec();
   }
 }
