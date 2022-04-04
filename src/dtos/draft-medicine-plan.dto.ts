@@ -17,17 +17,17 @@ export class DraftMedicinePlanDto {
   @ApiProperty({
     name: 'name'
   })
-  name: string;
+  name: String;
 
   @ApiProperty({
     name: 'orderAmount'
   })
-  orderAmount: number;
+  orderAmount: Number;
 
   @ApiProperty({
     name: 'dosage'
   })
-  dosage: number;
+  dosage: Number;
 
   @ApiProperty({
     enum: TimeOfDay,
@@ -46,7 +46,7 @@ export class DraftMedicinePlanDto {
   @ApiProperty({
     name: 'remark'
   })
-  remark: string;
+  remark: String;
 
-  prescriptionId: string;
+  prescriptionId: String;
 }

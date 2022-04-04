@@ -9,11 +9,13 @@ import { MedicineService } from '../services/medicine.service';
 import { DraftMedicinePlanService } from '../services/draft-medicine-plan.service';
 import { SearchMedicineDto } from '../dtos/search-medicine.dto';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
+import { PrescriptionService } from 'src/services/prescription.service';
 
 @Controller()
 export class ManagePrescriptionControl {
   constructor(private readonly medicineService: MedicineService,
     private readonly draftMedicinePlanService: DraftMedicinePlanService,
+    private readonly prescriptionService: PrescriptionService,
     ) { }
 
   @Get('medicines')
@@ -23,7 +25,9 @@ export class ManagePrescriptionControl {
 
   @Post('prescriptions')
   async createPrescription(@Body() prescriptionDto : PrescriptionDto) {
-    var draftMedicinePlans = await this.draftMedicinePlanService.create(prescriptionDto.draftMedicinePlans);
-    return {draftMedicinePlans: draftMedicinePlans};
+    var prescription = await this.prescriptionService.create();
+    var draftMedicinePlans = await this.draftMedicinePlanService.create(prescriptionDto.draftMedicinePlans, prescription._id.toString());
+    prescription.draftMedicinePlans = draftMedicinePlans;
+    return prescription;
   }
 }

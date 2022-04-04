@@ -10,9 +10,9 @@ export class DraftMedicinePlanService {
     @InjectModel(DraftMedicinePlan.name) private readonly model: Model<DraftMedicinePlanDocument>,
   ) { }
 
-  async create(draftMedicinePlans: DraftMedicinePlanDto[]): Promise<DraftMedicinePlan[]> {
+  async create(draftMedicinePlans: DraftMedicinePlanDto[], prescriptionId: String): Promise<DraftMedicinePlan[]> {
     draftMedicinePlans.forEach(plan => {
-      plan.prescriptionId = '123';
+      plan.prescriptionId = prescriptionId;
     })
     return await this.model.insertMany(draftMedicinePlans);
   }
