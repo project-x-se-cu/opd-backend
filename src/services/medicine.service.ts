@@ -9,7 +9,7 @@ export class MedicineService {
     @InjectModel(Medicine.name) private readonly model: Model<MedicineDocument>,
   ) { }
 
-  async findAll(name: string): Promise<Medicine[]> {
+  async findAll(name: String): Promise<Medicine[]> {
     if (name) {
       return await this.model.find(
         { name: { '$regex': name, '$options': 'i' } }

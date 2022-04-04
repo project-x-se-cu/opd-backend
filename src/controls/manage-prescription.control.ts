@@ -1,17 +1,29 @@
 import {
+  Body,
   Controller,
   Get,
+  Post,
   Query
 } from '@nestjs/common';
 import { MedicineService } from '../services/medicine.service';
+import { DraftMedicinePlanService } from '../services/draft-medicine-plan.service';
 import { SearchMedicineDto } from '../dtos/search-medicine.dto';
+import { PrescriptionDto } from 'src/dtos/prescription.dto';
 
-@Controller('medicines')
+@Controller()
 export class ManagePrescriptionControl {
-  constructor(private readonly service: MedicineService) { }
+  constructor(private readonly medicineService: MedicineService,
+    private readonly draftMedicinePlanService: DraftMedicinePlanService,
+    ) { }
 
-  @Get()
-  async index(@Query() searchMedicineDto: SearchMedicineDto) {
-    return await this.service.findAll(searchMedicineDto.name);
+  @Get('medicines')
+  async getMedicineList(@Query() searchMedicineDto: SearchMedicineDto) {
+    return await this.medicineService.findAll(searchMedicineDto.name);
+  }
+
+  @Post('prescriptions')
+  async createPrescription(@Body() prescriptionDto : PrescriptionDto) {
+    var draftMedicinePlans = await this.draftMedicinePlanService.create(prescriptionDto.draftMedicinePlans);
+    return {draftMedicinePlans: draftMedicinePlans};
   }
 }
