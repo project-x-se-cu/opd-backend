@@ -1,7 +1,7 @@
 import { DraftMedicinePlanDto } from "./draft-medicine-plan.dto";
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PrescriptionDto {
+export class CreatePrescriptionDto {
 
     @ApiProperty({
         name: 'draftMedicinePlans',

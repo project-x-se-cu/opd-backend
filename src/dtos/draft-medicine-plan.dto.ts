@@ -15,9 +15,9 @@ enum Meal {
 export class DraftMedicinePlanDto {
 
   @ApiProperty({
-    name: 'name'
+    name: 'medicineName'
   })
-  name: String;
+  medicineName: String;
 
   @ApiProperty({
     name: 'orderAmount'
