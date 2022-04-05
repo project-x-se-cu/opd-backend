@@ -34,14 +34,14 @@ export class DraftMedicinePlanDto {
     isArray: true,
     example: [TimeOfDay.MORNING, TimeOfDay.AFTERNOON, TimeOfDay.EVENING, TimeOfDay.NIGHT]
   })
-  timesOfDay: TimeOfDay[];
+  timesOfDay: Array<TimeOfDay>;
 
   @ApiProperty({
     enum: Meal,
     isArray: true,
     example: [Meal.BEFORE, Meal.AFTER]
   })
-  meals: Meal[];
+  meals: Array<Meal>;
 
   @ApiProperty({
     name: 'remark'

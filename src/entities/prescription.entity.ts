@@ -14,7 +14,7 @@ export class Prescription {
   status: String;
 
   @Prop()
-  draftMedicinePlans: DraftMedicinePlan[];
+  draftMedicinePlans: Array<DraftMedicinePlan>;
 }
 
 export const PrescriptionEntity = SchemaFactory.createForClass(Prescription);

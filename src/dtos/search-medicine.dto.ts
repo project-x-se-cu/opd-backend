@@ -5,5 +5,5 @@ export class SearchMedicineDto {
     @ApiPropertyOptional({
         name: 'name'
       })
-    name: string;
+    name: String;
 }

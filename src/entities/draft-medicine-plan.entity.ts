@@ -15,10 +15,10 @@ export class DraftMedicinePlan {
   dosage: Number;
 
   @Prop()
-  timesOfDay: String[];
+  timesOfDay: Array<String>;
 
   @Prop()
-  meals: String[];
+  meals: Array<String>;
 
   @Prop()
   remark: String;
