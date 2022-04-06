@@ -25,8 +25,7 @@ export class ManagePrescriptionControl {
 
   @Post('prescriptions')
   async createPrescription(@Body() createPrescriptionDto: CreatePrescriptionDto) {
-    var prescription = await this.prescriptionService.create();
-    var draftMedicinePlans = await this.draftMedicinePlanService.create(createPrescriptionDto.draftMedicinePlans, prescription._id.toString());
-    return { _id: prescription._id, status: prescription.status, draftMedicinePlans: draftMedicinePlans };
+    const draftMedicinePlans = await this.draftMedicinePlanService.create(createPrescriptionDto.draftMedicinePlans);
+    return { draftMedicinePlans: draftMedicinePlans };
   }
 }

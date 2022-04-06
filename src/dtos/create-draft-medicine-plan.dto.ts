@@ -12,7 +12,7 @@ enum Meal {
   AFTER = 'AFTER'
 }
 
-export class DraftMedicinePlanDto {
+export class CreateDraftMedicinePlanDto {
   
   @ApiProperty({
     name: 'medicineName'
@@ -48,5 +48,5 @@ export class DraftMedicinePlanDto {
   })
   remark: string;
 
-  prescriptionId: string;
+  status: string;
 }
