@@ -16,7 +16,7 @@ export class ManagePrescriptionControl {
   constructor(private readonly medicineService: MedicineService,
     private readonly draftMedicinePlanService: DraftMedicinePlanService,
     private readonly prescriptionService: PrescriptionService,
-    ) { }
+  ) { }
 
   @Get('medicines')
   async getMedicineList(@Query() searchMedicineDto: SearchMedicineDto) {
@@ -24,9 +24,9 @@ export class ManagePrescriptionControl {
   }
 
   @Post('prescriptions')
-  async createPrescription(@Body() createPrescriptionDto : CreatePrescriptionDto) {
+  async createPrescription(@Body() createPrescriptionDto: CreatePrescriptionDto) {
     var prescription = await this.prescriptionService.create();
     var draftMedicinePlans = await this.draftMedicinePlanService.create(createPrescriptionDto.draftMedicinePlans, prescription._id.toString());
-    return {_id: prescription._id, status: prescription.status, draftMedicinePlans: draftMedicinePlans};
+    return { _id: prescription._id, status: prescription.status, draftMedicinePlans: draftMedicinePlans };
   }
 }

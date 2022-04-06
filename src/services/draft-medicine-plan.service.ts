@@ -10,7 +10,7 @@ export class DraftMedicinePlanService {
     @InjectModel(DraftMedicinePlan.name) private readonly model: Model<DraftMedicinePlanDocument>,
   ) { }
 
-  async create(draftMedicinePlans: Array<DraftMedicinePlanDto>, prescriptionId: String): Promise<Array<DraftMedicinePlan>> {
+  async create(draftMedicinePlans: DraftMedicinePlanDto[], prescriptionId: string): Promise<DraftMedicinePlan[]> {
     draftMedicinePlans.forEach(plan => {
       plan.prescriptionId = prescriptionId;
     })

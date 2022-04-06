@@ -5,12 +5,12 @@ export type MedicineDocument = Medicine & Document;
 
 @Schema({ collection: 'medicine', versionKey: false })
 export class Medicine {
+  
+  @Prop()
+  name: string;
 
   @Prop()
-  name: String;
-
-  @Prop()
-  weight: Number;
+  weight: number;
 }
 
 export const MedicineEntity = SchemaFactory.createForClass(Medicine);

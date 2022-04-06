@@ -5,26 +5,27 @@ export type DraftMedicinePlanDocument = DraftMedicinePlan & Document;
 
 @Schema({ collection: 'draftMedicinePlan', versionKey: false })
 export class DraftMedicinePlan {
+  
   @Prop()
-  medicineName: String;
+  medicineName: string;
 
   @Prop()
-  orderAmount: Number;
+  orderAmount: number;
 
   @Prop()
-  dosage: Number;
+  dosage: number;
 
   @Prop()
-  timesOfDay: Array<String>;
+  timesOfDay: string[];
 
   @Prop()
-  meals: Array<String>;
+  meals: string[];
 
   @Prop()
-  remark: String;
+  remark: string;
 
   @Prop()
-  prescriptionId: String;
+  prescriptionId: string;
 }
 
 export const DraftMedicinePlanEntity = SchemaFactory.createForClass(DraftMedicinePlan);

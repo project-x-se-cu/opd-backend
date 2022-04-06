@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 enum TimeOfDay {
   MORNING = 'MORNING',
@@ -13,40 +13,40 @@ enum Meal {
 }
 
 export class DraftMedicinePlanDto {
-
+  
   @ApiProperty({
     name: 'medicineName'
   })
-  medicineName: String;
+  medicineName: string;
 
   @ApiProperty({
     name: 'orderAmount'
   })
-  orderAmount: Number;
+  orderAmount: number;
 
   @ApiProperty({
     name: 'dosage'
   })
-  dosage: Number;
+  dosage: number;
 
   @ApiProperty({
     enum: TimeOfDay,
     isArray: true,
     example: [TimeOfDay.MORNING, TimeOfDay.AFTERNOON, TimeOfDay.EVENING, TimeOfDay.NIGHT]
   })
-  timesOfDay: Array<TimeOfDay>;
+  timesOfDay: TimeOfDay[];
 
   @ApiProperty({
     enum: Meal,
     isArray: true,
     example: [Meal.BEFORE, Meal.AFTER]
   })
-  meals: Array<Meal>;
+  meals: Meal[];
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     name: 'remark'
   })
-  remark: String;
+  remark: string;
 
-  prescriptionId: String;
+  prescriptionId: string;
 }
