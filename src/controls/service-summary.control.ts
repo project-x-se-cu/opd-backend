@@ -3,10 +3,12 @@ import {
   Get,
   Query
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { SearchServiceSummaryDto } from 'src/dtos/search-service-summary.dto';
 import { InvoiceService } from 'src/services/invoice.service';
 import { RecieptService } from 'src/services/reciept.service';
 
+@ApiTags('Use Case - View service summary')
 @Controller()
 export class ServiceSummaryControl {
   constructor(

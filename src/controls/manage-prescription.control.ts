@@ -12,9 +12,10 @@ import { DraftMedicinePlanService } from '../services/draft-medicine-plan.servic
 import { SearchMedicineDto } from '../dtos/search-medicine.dto';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
 import { PrescriptionService } from 'src/services/prescription.service';
-import { ApiParam } from '@nestjs/swagger';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { MedicinePlanService } from 'src/services/medicine-plan.service';
 
+@ApiTags('Use Case - Issue a prescription')
 @Controller()
 export class ManagePrescriptionControl {
   constructor(private readonly medicineService: MedicineService,
