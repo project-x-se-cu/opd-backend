@@ -42,7 +42,7 @@ export class ManagePrescriptionControl {
   @ApiParam({ name: 'id', required: true })
   async editPrescription(@Param() params, @Body() prescriptionDto: PrescriptionDto) {
     const id = params.id;
-    const prescription = await this.prescriptionService.edit(params.id);
+    const prescription = await this.prescriptionService.updateStatus(id, 'EDITED');
     const draftMedicinePlans = await this.draftMedicinePlanService.edit(prescriptionDto.draftMedicinePlans);
     return {
       _id: id,
@@ -50,4 +50,28 @@ export class ManagePrescriptionControl {
       draftMedicinePlans: draftMedicinePlans
     };
   }
+
+  @Post('prescriptions/:id/cancel')
+  @ApiParam({ name: 'id', required: true })
+  async cancelPrescription(@Param() params) {
+    const id = params.id;
+    const prescription = await this.prescriptionService.updateStatus(id, 'CANCELLED');
+    await this.draftMedicinePlanService.updateStatus(id, 'CANCELLED');
+    return {
+      _id: id,
+      status: prescription.status
+    };
+  }
+
+  // @Post('prescriptions/:id/confirm')
+  // @ApiParam({ name: 'id', required: true })
+  // async confirmPrescription(@Param() params) {
+  //   const id = params.id;
+  //   const prescription = await this.prescriptionService.updateStatus(id, 'CONFIRMED');
+  //   await this.draftMedicinePlanService.updateStatus(id, 'CONFIRMED');
+  //   return {
+  //     _id: id,
+  //     status: prescription.status
+  //   };
+  // }
 }

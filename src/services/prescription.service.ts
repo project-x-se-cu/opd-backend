@@ -12,13 +12,13 @@ export class PrescriptionService {
 
   async create(): Promise<Prescription> {
     const prescription = new PrescriptionDto();
-    prescription.status = 'CREATED'
+    prescription.status = 'CREATED';
     return await this.model.create(prescription);
   }
 
-  async edit(id: string): Promise<Prescription> {
+  async updateStatus(id: string, status: string): Promise<Prescription> {
     const prescription = new PrescriptionDto();
-    prescription.status = 'EDITED'
+    prescription.status = status;
     return await this.model.findByIdAndUpdate(id, prescription, { new: true })
   }
 }

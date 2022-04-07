@@ -27,4 +27,8 @@ export class DraftMedicinePlanService {
     }
     return editedDraftMedicinePlans;
   }
+
+  async updateStatus(prescriptionId: string, status: string): Promise<void> {
+    await this.model.updateMany({ prescriptionId: prescriptionId }, { status: status });
+  }
 }
