@@ -17,6 +17,9 @@ export class Reciept {
 
   @Prop()
   createdAt: Date;
+
+  @Prop()
+  updatedAt: Date;
 }
 
 export const RecieptEntity = SchemaFactory.createForClass(Reciept);

@@ -26,14 +26,16 @@ export class ServiceSummaryControl {
         amount: invoice.amount,
         status: invoice.status,
         summary: invoice.summary,
-        bank: null,
-        createdAt: invoice.createdAt
+        bank: undefined,
+        createdAt: invoice.createdAt,
+        updatedAt: invoice.updatedAt
       };
       if (invoice.status === 'PAID') {
         const reciept = await this.recieptService.findByInvoiceId(invoice._id.toString());
         serviceSummary.refId = reciept.refId;
         serviceSummary.bank = reciept.bank;
         serviceSummary.createdAt = reciept.createdAt;
+        serviceSummary.updatedAt = reciept.updatedAt;
       }
       serviceSummaryList.push(serviceSummary);
     }
