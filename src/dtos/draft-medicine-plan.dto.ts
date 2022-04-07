@@ -13,6 +13,9 @@ enum Meal {
 }
 
 export class DraftMedicinePlanDto {
+
+  @ApiProperty()
+  _id: string;
   
   @ApiProperty()
   medicineName: string;

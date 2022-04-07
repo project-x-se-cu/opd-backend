@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type MedicineDocument = Medicine & Document;
 
-@Schema({ collection: 'medicine', versionKey: false })
+@Schema({ collection: 'medicine', versionKey: false, timestamps: true })
 export class Medicine {
   
   @Prop()

@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Schema as MongooseSchema } from 'mongoose'
 
 export type DraftMedicinePlanDocument = DraftMedicinePlan & Document;
 
-@Schema({ collection: 'draftMedicinePlan', versionKey: false })
+@Schema({ collection: 'draftMedicinePlan', versionKey: false, timestamps: true })
 export class DraftMedicinePlan {
   
   @Prop()

@@ -15,4 +15,10 @@ export class PrescriptionService {
     prescription.status = 'CREATED'
     return await this.model.create(prescription);
   }
+
+  async edit(id: string): Promise<Prescription> {
+    const prescription = new PrescriptionDto();
+    prescription.status = 'EDITED'
+    return await this.model.findByIdAndUpdate(id, prescription, { new: true })
+  }
 }

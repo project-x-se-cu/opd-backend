@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Put,
   Query
@@ -11,6 +12,7 @@ import { DraftMedicinePlanService } from '../services/draft-medicine-plan.servic
 import { SearchMedicineDto } from '../dtos/search-medicine.dto';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
 import { PrescriptionService } from 'src/services/prescription.service';
+import { ApiParam } from '@nestjs/swagger';
 
 @Controller()
 export class ManagePrescriptionControl {
@@ -29,16 +31,23 @@ export class ManagePrescriptionControl {
     const prescription = await this.prescriptionService.create();
     const prescriptionId = prescription._id.toString()
     const draftMedicinePlans = await this.draftMedicinePlanService.create(prescriptionDto.draftMedicinePlans, prescriptionId);
-    const prescriptionResponse = new PrescriptionDto();
-    prescriptionResponse._id = prescriptionId;
-    prescriptionResponse.status = prescription.status;
-    prescriptionResponse.draftMedicinePlans = draftMedicinePlans;
-    return prescriptionResponse;
+    return {
+      _id: prescriptionId,
+      status: prescription.status,
+      draftMedicinePlans: draftMedicinePlans
+    };
   }
 
-  // @Put('prescriptions')
-  // async editPrescription(@Body() editPrescriptionDto: EditPrescriptionDto) {
-  //   const draftMedicinePlans = await this.draftMedicinePlanService.edit(editPrescriptionDto.draftMedicinePlans);
-  //   return { draftMedicinePlans: draftMedicinePlans };
-  // }
+  @Put('prescriptions/:id')
+  @ApiParam({ name: 'id', required: true })
+  async editPrescription(@Param() params, @Body() prescriptionDto: PrescriptionDto) {
+    const id = params.id;
+    const prescription = await this.prescriptionService.edit(params.id);
+    const draftMedicinePlans = await this.draftMedicinePlanService.edit(prescriptionDto.draftMedicinePlans);
+    return {
+      _id: id,
+      status: prescription.status,
+      draftMedicinePlans: draftMedicinePlans
+    };
+  }
 }

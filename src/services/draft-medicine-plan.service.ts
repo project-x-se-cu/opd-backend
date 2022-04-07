@@ -18,12 +18,13 @@ export class DraftMedicinePlanService {
     return await this.model.insertMany(draftMedicinePlans);
   }
 
-  // async edit(editDraftMedicinePlanDto: EditDraftMedicinePlanDto[]): Promise<any> {
-  //   editDraftMedicinePlanDto.forEach(async plan => {
-  //     plan.status = 'EDITED';
-  //     const editedDraftMedicinePlan = await this.model.updateOne({ _id: plan._id }, { $set: plan });
-  //     console.log(plan._id)
-  //   })
-  //   return [];
-  // }
+  async edit(draftMedicinePlans: DraftMedicinePlanDto[]): Promise<DraftMedicinePlan[]> {
+    const editedDraftMedicinePlans = [];
+    for (let plan of draftMedicinePlans) {
+      plan.status = 'EDITED';
+      const editedPlan = await this.model.findByIdAndUpdate(plan._id, plan, { new: true })
+      editedDraftMedicinePlans.push(editedPlan);
+    }
+    return editedDraftMedicinePlans;
+  }
 }

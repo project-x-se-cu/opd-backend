@@ -4,7 +4,7 @@ import { Schema as MongooseSchema } from 'mongoose'
 
 export type PrescriptionDocument = Prescription & Document;
 
-@Schema({ collection: 'prescription', versionKey: false })
+@Schema({ collection: 'prescription', versionKey: false, timestamps: true })
 export class Prescription {
 
   @Prop({ auto: true })
