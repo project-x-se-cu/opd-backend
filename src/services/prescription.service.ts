@@ -12,7 +12,7 @@ export class PrescriptionService {
 
   async create(): Promise<Prescription> {
     const prescription = new PrescriptionDto();
-    prescription.status = 'CREATED';
+    prescription.status = 'WAITING';
     return await this.model.create(prescription);
   }
 

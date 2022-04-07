@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type DraftMedicinePlanDocument = DraftMedicinePlan & Document;
+export type MedicinePlanDocument = MedicinePlan & Document;
 
-@Schema({ collection: 'draftMedicinePlan', versionKey: false, timestamps: true })
-export class DraftMedicinePlan {
+@Schema({ collection: 'medicinePlan', versionKey: false, timestamps: true })
+export class MedicinePlan {
   
   @Prop()
   medicineName: string;
@@ -31,4 +31,4 @@ export class DraftMedicinePlan {
   prescriptionId: string;
 }
 
-export const DraftMedicinePlanEntity = SchemaFactory.createForClass(DraftMedicinePlan);
+export const MedicinePlanEntity = SchemaFactory.createForClass(MedicinePlan);

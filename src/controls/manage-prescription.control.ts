@@ -13,11 +13,13 @@ import { SearchMedicineDto } from '../dtos/search-medicine.dto';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
 import { PrescriptionService } from 'src/services/prescription.service';
 import { ApiParam } from '@nestjs/swagger';
+import { MedicinePlanService } from 'src/services/medicine-plan.service';
 
 @Controller()
 export class ManagePrescriptionControl {
   constructor(private readonly medicineService: MedicineService,
     private readonly draftMedicinePlanService: DraftMedicinePlanService,
+    private readonly medicinePlanService: MedicinePlanService,
     private readonly prescriptionService: PrescriptionService,
   ) { }
 
@@ -63,15 +65,18 @@ export class ManagePrescriptionControl {
     };
   }
 
-  // @Post('prescriptions/:id/confirm')
-  // @ApiParam({ name: 'id', required: true })
-  // async confirmPrescription(@Param() params) {
-  //   const id = params.id;
-  //   const prescription = await this.prescriptionService.updateStatus(id, 'CONFIRMED');
-  //   await this.draftMedicinePlanService.updateStatus(id, 'CONFIRMED');
-  //   return {
-  //     _id: id,
-  //     status: prescription.status
-  //   };
-  // }
+  @Post('prescriptions/:id/confirm')
+  @ApiParam({ name: 'id', required: true })
+  async confirmPrescription(@Param() params) {
+    const id = params.id;
+    const prescription = await this.prescriptionService.updateStatus(id, 'CREATED');
+    const draftMedicinePlans = await this.draftMedicinePlanService.findByPrescriptionId(id);
+    const medicinePlans = draftMedicinePlans.map(plan => 
+      this.draftMedicinePlanService.transformToMedicinePlanDto(plan));
+    const x = await this.medicinePlanService.create(medicinePlans, id);
+    return {
+      _id: id,
+      status: prescription.status
+    };
+  }
 }
