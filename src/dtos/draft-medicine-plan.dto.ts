@@ -12,21 +12,15 @@ enum Meal {
   AFTER = 'AFTER'
 }
 
-export class CreateDraftMedicinePlanDto {
+export class DraftMedicinePlanDto {
   
-  @ApiProperty({
-    name: 'medicineName'
-  })
+  @ApiProperty()
   medicineName: string;
 
-  @ApiProperty({
-    name: 'orderAmount'
-  })
+  @ApiProperty()
   orderAmount: number;
 
-  @ApiProperty({
-    name: 'dosage'
-  })
+  @ApiProperty()
   dosage: number;
 
   @ApiProperty({
@@ -34,19 +28,19 @@ export class CreateDraftMedicinePlanDto {
     isArray: true,
     example: [TimeOfDay.MORNING, TimeOfDay.AFTERNOON, TimeOfDay.EVENING, TimeOfDay.NIGHT]
   })
-  timesOfDay: TimeOfDay[];
+  timesOfDay: string[];
 
   @ApiProperty({
     enum: Meal,
     isArray: true,
     example: [Meal.BEFORE, Meal.AFTER]
   })
-  meals: Meal[];
+  meals: string[];
 
-  @ApiPropertyOptional({
-    name: 'remark'
-  })
+  @ApiPropertyOptional()
   remark: string;
 
   status: string;
+
+  prescriptionId: string;
 }

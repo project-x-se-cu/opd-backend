@@ -26,6 +26,9 @@ export class DraftMedicinePlan {
 
   @Prop()
   status: string;
+
+  @Prop()
+  prescriptionId: string;
 }
 
 export const DraftMedicinePlanEntity = SchemaFactory.createForClass(DraftMedicinePlan);
