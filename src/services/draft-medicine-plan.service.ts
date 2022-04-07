@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DraftMedicinePlanDto } from 'src/dtos/draft-medicine-plan.dto';
 import { MedicinePlanDto } from 'src/dtos/medicine-plan.dto';
-import { MedicinePlan } from 'src/entities/medicine-plan.entity';
 import { DraftMedicinePlan, DraftMedicinePlanDocument } from '../entities/draft-medicine-plan.entity';
 
 @Injectable()
@@ -30,7 +29,7 @@ export class DraftMedicinePlanService {
     return editedDraftMedicinePlans;
   }
 
-  async updateStatus(prescriptionId: string, status: string): Promise<void> {
+  async updateStatusByPrescriptionId(prescriptionId: string, status: string): Promise<void> {
     await this.model.updateMany({ prescriptionId: prescriptionId }, { status: status });
   }
 

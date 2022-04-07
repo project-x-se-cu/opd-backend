@@ -44,7 +44,7 @@ export class ManagePrescriptionControl {
   @ApiParam({ name: 'id', required: true })
   async editPrescription(@Param() params, @Body() prescriptionDto: PrescriptionDto) {
     const id = params.id;
-    const prescription = await this.prescriptionService.updateStatus(id, 'EDITED');
+    const prescription = await this.prescriptionService.updateStatusById(id, 'EDITED');
     const draftMedicinePlans = await this.draftMedicinePlanService.edit(prescriptionDto.draftMedicinePlans);
     return {
       _id: id,
@@ -57,8 +57,8 @@ export class ManagePrescriptionControl {
   @ApiParam({ name: 'id', required: true })
   async cancelPrescription(@Param() params) {
     const id = params.id;
-    const prescription = await this.prescriptionService.updateStatus(id, 'CANCELLED');
-    await this.draftMedicinePlanService.updateStatus(id, 'CANCELLED');
+    const prescription = await this.prescriptionService.updateStatusById(id, 'CANCELLED');
+    await this.draftMedicinePlanService.updateStatusByPrescriptionId(id, 'CANCELLED');
     return {
       _id: id,
       status: prescription.status
@@ -69,7 +69,7 @@ export class ManagePrescriptionControl {
   @ApiParam({ name: 'id', required: true })
   async confirmPrescription(@Param() params) {
     const id = params.id;
-    const prescription = await this.prescriptionService.updateStatus(id, 'CREATED');
+    const prescription = await this.prescriptionService.updateStatusById(id, 'CREATED');
     const draftMedicinePlans = await this.draftMedicinePlanService.findByPrescriptionId(id);
     const medicinePlans = draftMedicinePlans.map(plan => 
       this.draftMedicinePlanService.transformToMedicinePlanDto(plan));

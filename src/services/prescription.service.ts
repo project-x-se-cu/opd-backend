@@ -16,7 +16,7 @@ export class PrescriptionService {
     return await this.model.create(prescription);
   }
 
-  async updateStatus(id: string, status: string): Promise<Prescription> {
+  async updateStatusById(id: string, status: string): Promise<Prescription> {
     const prescription = new PrescriptionDto();
     prescription.status = status;
     return await this.model.findByIdAndUpdate(id, prescription, { new: true })
