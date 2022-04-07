@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document} from 'mongoose';
-import { Schema as MongooseSchema } from 'mongoose'
+import { Schema as MongooseSchema } from 'mongoose';
 
 export type PrescriptionDocument = Prescription & Document;
 

@@ -73,7 +73,7 @@ export class ManagePrescriptionControl {
     const draftMedicinePlans = await this.draftMedicinePlanService.findByPrescriptionId(id);
     const medicinePlans = draftMedicinePlans.map(plan => 
       this.draftMedicinePlanService.transformToMedicinePlanDto(plan));
-    const x = await this.medicinePlanService.create(medicinePlans, id);
+    await this.medicinePlanService.create(medicinePlans, id);
     return {
       _id: id,
       status: prescription.status

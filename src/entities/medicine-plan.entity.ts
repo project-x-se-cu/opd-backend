@@ -27,7 +27,7 @@ export class MedicinePlan {
   @Prop()
   status: string;
 
-  @Prop()
+  @Prop({ select: false })
   prescriptionId: string;
 }
 
