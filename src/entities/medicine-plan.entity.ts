@@ -10,16 +10,16 @@ export class MedicinePlan {
   medicineName: string;
 
   @Prop()
-  orderAmount: number;
+  amount: number;
 
   @Prop()
   dosage: number;
 
   @Prop()
-  timesOfDay: string[];
+  dosageTimes: string[];
 
   @Prop()
-  meals: string[];
+  dosageMeals: string[];
 
   @Prop()
   remark: string;
@@ -27,7 +27,7 @@ export class MedicinePlan {
   @Prop()
   status: string;
 
-  @Prop({ select: false })
+  @Prop()
   prescriptionId: string;
 }
 

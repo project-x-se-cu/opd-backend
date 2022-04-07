@@ -30,7 +30,7 @@ export class Invoice {
   @Prop()
   summary: Summary;
 
-  @Prop({ select: false })
+  @Prop()
   userId: string;
 }
 

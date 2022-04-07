@@ -20,7 +20,6 @@ export class ServiceSummaryControl {
     const serviceSummaryList = [];
     for (let invoice of invoices) {
       const serviceSummary = {
-        userId: searchServiceSummaryDto.userId,
         invoice: invoice,
         reciept: null
       };

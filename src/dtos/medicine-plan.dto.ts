@@ -4,13 +4,13 @@ export class MedicinePlanDto {
   
   medicineName: string;
 
-  orderAmount: number;
+  amount: number;
 
   dosage: number;
 
-  timesOfDay: string[];
+  dosageTimes: string[];
 
-  meals: string[];
+  dosageMeals: string[];
 
   remark: string;
 

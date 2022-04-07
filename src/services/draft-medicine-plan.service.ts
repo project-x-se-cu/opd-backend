@@ -40,13 +40,13 @@ export class DraftMedicinePlanService {
   transformToMedicinePlanDto(draftMedicinePlan: DraftMedicinePlan): MedicinePlanDto {
     const medicinePlan = new MedicinePlanDto();
     medicinePlan.dosage = draftMedicinePlan.dosage;
-    medicinePlan.meals = draftMedicinePlan.meals;
+    medicinePlan.dosageMeals = draftMedicinePlan.dosageMeals;
     medicinePlan.medicineName = draftMedicinePlan.medicineName;
-    medicinePlan.orderAmount = draftMedicinePlan.orderAmount;
+    medicinePlan.amount = draftMedicinePlan.amount;
     medicinePlan.prescriptionId = draftMedicinePlan.prescriptionId;
     medicinePlan.remark = draftMedicinePlan.remark;
     medicinePlan.status = draftMedicinePlan.status;
-    medicinePlan.timesOfDay = draftMedicinePlan.timesOfDay;
+    medicinePlan.dosageTimes = draftMedicinePlan.dosageTimes;
     return medicinePlan;
   }
 }

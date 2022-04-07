@@ -10,12 +10,9 @@ export class Reciept {
   refId: string;
 
   @Prop()
-  amount: number;
-
-  @Prop()
   bank: string;
 
-  @Prop({ select: false })
+  @Prop()
   invoiceId: string;
 }
 
