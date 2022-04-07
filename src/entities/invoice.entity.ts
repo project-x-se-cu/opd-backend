@@ -32,6 +32,9 @@ export class Invoice {
 
   @Prop()
   userId: string;
+
+  @Prop()
+  createdAt: Date;
 }
 
 export const InvoiceEntity = SchemaFactory.createForClass(Invoice);

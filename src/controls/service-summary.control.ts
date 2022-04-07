@@ -22,11 +22,18 @@ export class ServiceSummaryControl {
     const serviceSummaryList = [];
     for (let invoice of invoices) {
       const serviceSummary = {
-        invoice: invoice,
-        reciept: null
+        refId: invoice.refId,
+        amount: invoice.amount,
+        status: invoice.status,
+        summary: invoice.summary,
+        bank: null,
+        createdAt: invoice.createdAt
       };
       if (invoice.status === 'PAID') {
-        serviceSummary.reciept = await this.recieptService.findByInvoiceId(invoice._id.toString());
+        const reciept = await this.recieptService.findByInvoiceId(invoice._id.toString());
+        serviceSummary.refId = reciept.refId;
+        serviceSummary.bank = reciept.bank;
+        serviceSummary.createdAt = reciept.createdAt;
       }
       serviceSummaryList.push(serviceSummary);
     }

@@ -14,6 +14,9 @@ export class Reciept {
 
   @Prop()
   invoiceId: string;
+
+  @Prop()
+  createdAt: Date;
 }
 
 export const RecieptEntity = SchemaFactory.createForClass(Reciept);
