@@ -36,7 +36,7 @@ export class ServiceSummaryControl {
     serviceSummaryResponse.status = invoice.status;
     serviceSummaryResponse.summary = invoice.summary;
     serviceSummaryResponse.createdAt = invoice.createdAt;
-      serviceSummaryResponse.updatedAt = invoice.updatedAt;
+    serviceSummaryResponse.updatedAt = invoice.updatedAt;
     if (invoice.status === 'PAID') {
       const reciept = await this.recieptService.findByInvoiceId(invoice._id.toString());
       serviceSummaryResponse.refId = reciept.refId;
