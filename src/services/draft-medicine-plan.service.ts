@@ -37,7 +37,7 @@ export class DraftMedicinePlanService {
     return await this.model.find({ prescriptionId: prescriptionId }).exec();
   }
 
-  transformToMedicinePlanDto(draftMedicinePlan: DraftMedicinePlan): MedicinePlanDto {
+  toMedicinePlanDto(draftMedicinePlan: DraftMedicinePlan): MedicinePlanDto {
     const medicinePlan = new MedicinePlanDto();
     medicinePlan.dosage = draftMedicinePlan.dosage;
     medicinePlan.dosageMeals = draftMedicinePlan.dosageMeals;
