@@ -19,8 +19,8 @@ export class ServiceSummaryControl {
   ) { }
 
   @Get('service-summaries')
-  async getServiceSummarryList(@Query() searchServiceSummaryDto: SearchServiceSummaryDto) {
-    const invoices = await this.invoiceService.findByAppointmentId(searchServiceSummaryDto.userId);
+  async getServiceSummarryList(@Query() searchServiceSummaryRequest: SearchServiceSummaryDto) {
+    const invoices = await this.invoiceService.findByAppointmentId(searchServiceSummaryRequest.userId);
     const serviceSummaryListResponse = [];
     for (let invoice of invoices) {
       const serviceSummaryResponse = await this.toServiceSummaryResponse(invoice);
