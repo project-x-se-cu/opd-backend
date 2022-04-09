@@ -4,6 +4,8 @@ export class MedicinePlanDto {
   
   medicineName: string;
 
+  properties: string;
+
   amount: number;
 
   dosage: number;

@@ -10,6 +10,9 @@ export class MedicinePlan {
   medicineName: string;
 
   @Prop()
+  properties: string;
+
+  @Prop()
   amount: number;
 
   @Prop()

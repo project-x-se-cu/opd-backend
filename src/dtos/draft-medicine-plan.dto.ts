@@ -11,6 +11,9 @@ export class DraftMedicinePlanDto {
   medicineName: string;
 
   @ApiProperty()
+  properties: string;
+
+  @ApiProperty()
   amount: number;
 
   @ApiProperty()
