@@ -1,16 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-
-enum DosageTime {
-  MORNING = 'MORNING',
-  AFTERNOON = 'AFTERNOON',
-  EVENING = 'EVENING',
-  NIGHT = 'NIGHT',
-}
-
-enum DosageMeal {
-  BEFORE = 'BEFORE',
-  AFTER = 'AFTER'
-}
+import {DosageTime} from 'src/enums/dosage-time.enum';
+import {DosageMeal} from 'src/enums/dosage-meal.enum'
 
 export class DraftMedicinePlanDto {
 

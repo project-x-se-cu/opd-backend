@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
 import { Prescription, PrescriptionDocument } from 'src/entities/prescription.entity';
+import { PrescriptionStatus } from 'src/enums/presciption-status.enum';
 
 @Injectable()
 export class PrescriptionService {
@@ -12,7 +13,7 @@ export class PrescriptionService {
 
   async create(): Promise<Prescription> {
     const prescription = new PrescriptionDto();
-    prescription.status = 'WAITING';
+    prescription.status = PrescriptionStatus.WAITING;
     return await this.model.create(prescription);
   }
 
