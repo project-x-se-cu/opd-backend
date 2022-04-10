@@ -1,6 +1,6 @@
 export enum PrescriptionStatus {
-    WAITING = 'WAITING',
+    CREATED = 'CREATED',
     EDITED = 'EDITED',
     CANCELLED = 'CANCELLED',
-    CREATED = 'CREATED'
+    CONFIRMED = 'CONFIRMED'
 }

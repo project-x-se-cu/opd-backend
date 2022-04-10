@@ -72,7 +72,7 @@ export class ManagePrescriptionControl {
   @Post('prescriptions/:id/confirm')
   @ApiParam({ name: 'id', required: true })
   async confirmPrescription(@Param('id') id: string) {
-    const confirmedPrescription = await this.prescriptionService.updateStatusById(id, PrescriptionStatus.CREATED);
+    const confirmedPrescription = await this.prescriptionService.updateStatusById(id, PrescriptionStatus.CONFIRMED);
     const draftMedicinePlans = await this.draftMedicinePlanService.findByPrescriptionId(id);
     const medicinePlans = draftMedicinePlans.map(plan => 
       this.toMedicinePlan(plan));
