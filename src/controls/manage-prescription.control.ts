@@ -83,12 +83,12 @@ export class ManagePrescriptionControl {
     await this.medicinePlanService.create(medicinePlans, id);
     const invoice = new InvoiceDto();
     invoice.status = InvoiceStatus.UNPAID;
-    // TODO generate ref id
+    // TODO refactor
     invoice.refId = 'INVOICE#' + Math.floor(1000 + Math.random() * 9000);
     // TODO set user id
     invoice.userId = '1';
     const invoiceSummary = new InvoiceSummary();
-    // Hard Code
+    // hard code
     invoiceSummary.serviceFee = 500;
     invoiceSummary.medicineFee = [];
     let totalPrice = 0;
