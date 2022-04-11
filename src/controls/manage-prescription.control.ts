@@ -81,25 +81,28 @@ export class ManagePrescriptionControl {
       this.toMedicinePlan(plan));
     await this.medicinePlanService.create(medicinePlans, id);
     const invoice = new InvoiceDto();
-    // invoice.status = 'UNPAID';
-    // // TODO generate ref id
-    // invoice.refId = 'INVOICE#1';
-    // // TODO set user id
-    // invoice.userId = '1';
-    // const invoiceSummary = new InvoiceSummary();
-    // invoiceSummary.serviceFee = 500;
-    // invoiceSummary.medicineFee = [];
-    // let invoiceAmount = 0;
-    // medicinePlans.forEach(medicinePlan => {
-    //   invoiceAmount = invoiceAmount + medicinePlan.amount;
-    //   let medicineFee = new MedicineFee();
-    //   medicineFee.medicineName = medicinePlan.medicineName;
-    //   medicineFee.amount = medicinePlan.amount;
-    //   medicineFee.totalPrice = 500;
-    //   invoiceSummary.medicineFee.push(medicineFee);
-    // })
-
-    // await this.invoiceService.create();
+    invoice.status = 'UNPAID';
+    // TODO generate ref id
+    invoice.refId = 'INVOICE#' + Math.floor(1000 + Math.random() * 9000);
+    // TODO set user id
+    invoice.userId = '1';
+    const invoiceSummary = new InvoiceSummary();
+    // TODO
+    invoiceSummary.serviceFee = 500;
+    invoiceSummary.medicineFee = [];
+    let totalPrice = 0;
+    medicinePlans.forEach(medicinePlan => {
+      let medicineFee = new MedicineFee();
+      medicineFee.medicineName = medicinePlan.medicineName;
+      medicineFee.amount = medicinePlan.amount;
+      // TODO
+      medicineFee.price = medicineFee.amount * 10;
+      invoiceSummary.medicineFee.push(medicineFee);
+      totalPrice = totalPrice + medicineFee.price;
+    })
+    invoice.price = totalPrice;
+    invoice.summary = invoiceSummary;
+    await this.invoiceService.create(invoice);
     return {
       _id: id,
       status: confirmedPrescription.status

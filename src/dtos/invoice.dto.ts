@@ -2,6 +2,8 @@ export class MedicineFee {
     medicineName: string;
 
     amount: number;
+
+    price: number;
 }
 
 export class InvoiceSummary {
@@ -15,7 +17,7 @@ export class InvoiceDto {
 
     refId: string;
     
-    price: string;
+    price: number;
 
     status: string;
 
