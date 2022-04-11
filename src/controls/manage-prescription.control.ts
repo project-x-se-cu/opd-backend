@@ -21,6 +21,7 @@ import { PrescriptionStatus } from 'src/enums/presciption-status.enum';
 import { DraftMedicincePlanStatus } from 'src/enums/draft-medicine-plan-status.enum';
 import { InvoiceService } from 'src/services/invoice.service';
 import { InvoiceDto, InvoiceSummary, MedicineFee } from 'src/dtos/invoice.dto';
+import { InvoiceStatus } from 'src/enums/invoice-status.enum';
 
 @ApiTags('Use Case - Issue a prescription')
 @Controller()
@@ -64,11 +65,11 @@ export class ManagePrescriptionControl {
   @Post('prescriptions/:id/cancel')
   @ApiParam({ name: 'id', required: true })
   async cancelPrescription(@Param('id') id: string) {
-    const cancelledPrescription = await this.prescriptionService.updateStatusById(id, PrescriptionStatus.CANCELLED);
-    await this.draftMedicinePlanService.updateStatusByPrescriptionId(id, DraftMedicincePlanStatus.CANCELLED);
+    const canceledPrescription = await this.prescriptionService.updateStatusById(id, PrescriptionStatus.CANCELLED);
+    await this.draftMedicinePlanService.updateStatusByPrescriptionId(id, DraftMedicincePlanStatus.CANCELED);
     return {
       _id: id,
-      status: cancelledPrescription.status
+      status: canceledPrescription.status
     };
   }
 
@@ -81,13 +82,13 @@ export class ManagePrescriptionControl {
       this.toMedicinePlan(plan));
     await this.medicinePlanService.create(medicinePlans, id);
     const invoice = new InvoiceDto();
-    invoice.status = 'UNPAID';
+    invoice.status = InvoiceStatus.UNPAID;
     // TODO generate ref id
     invoice.refId = 'INVOICE#' + Math.floor(1000 + Math.random() * 9000);
     // TODO set user id
     invoice.userId = '1';
     const invoiceSummary = new InvoiceSummary();
-    // TODO
+    // Hard Code
     invoiceSummary.serviceFee = 500;
     invoiceSummary.medicineFee = [];
     let totalPrice = 0;

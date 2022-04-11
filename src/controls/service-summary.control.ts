@@ -7,6 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { SearchServiceSummaryDto } from 'src/dtos/search-service-summary.dto';
 import { ServiceSummaryDto } from 'src/dtos/service-summary.dto';
 import { Invoice } from 'src/entities/invoice.entity';
+import { InvoiceStatus } from 'src/enums/invoice-status.enum';
 import { InvoiceService } from 'src/services/invoice.service';
 import { RecieptService } from 'src/services/reciept.service';
 
@@ -37,7 +38,7 @@ export class ServiceSummaryControl {
     serviceSummaryResponse.summary = invoice.summary;
     serviceSummaryResponse.createdAt = invoice.createdAt;
     serviceSummaryResponse.updatedAt = invoice.updatedAt;
-    if (invoice.status === 'PAID') {
+    if (invoice.status === InvoiceStatus.PAID) {
       const reciept = await this.recieptService.findByInvoiceId(invoice._id.toString());
       serviceSummaryResponse.refId = reciept.refId;
       serviceSummaryResponse.bank = reciept.bank;
