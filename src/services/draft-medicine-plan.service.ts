@@ -11,10 +11,9 @@ export class DraftMedicinePlanService {
     @InjectModel(DraftMedicinePlan.name) private readonly model: Model<DraftMedicinePlanDocument>,
   ) { }
 
-  async create(draftMedicinePlans: DraftMedicinePlanDto[], prescriptionId: string): Promise<DraftMedicinePlan[]> {
+  async create(draftMedicinePlans: DraftMedicinePlanDto[]): Promise<DraftMedicinePlan[]> {
     draftMedicinePlans.forEach(plan => {
       plan.status = DraftMedicincePlanStatus.CREATED;
-      plan.prescriptionId = prescriptionId;
     })
     return await this.model.insertMany(draftMedicinePlans);
   }
@@ -29,11 +28,21 @@ export class DraftMedicinePlanService {
     return editedDraftMedicinePlans;
   }
 
-  async updateStatusByPrescriptionId(prescriptionId: string, status: string): Promise<void> {
-    await this.model.updateMany({ prescriptionId: prescriptionId }, { status: status });
+  async cancel(draftMedicinePlans: DraftMedicinePlanDto[]): Promise<DraftMedicinePlan[]> {
+    const canceledDraftMedicinePlans = [];
+    for (let plan of draftMedicinePlans) {
+      const canceledPlan = await this.model.findByIdAndUpdate(plan._id, { $set: { status: DraftMedicincePlanStatus.CANCELED } }, { new: true })
+      canceledDraftMedicinePlans.push(canceledPlan);
+    }
+    return canceledDraftMedicinePlans;
   }
 
-  async findByPrescriptionId(prescriptionId: string): Promise<DraftMedicinePlan[]> {
-    return await this.model.find({ prescriptionId: prescriptionId }).exec();
+  async delete(draftMedicinePlans: DraftMedicinePlanDto[]): Promise<DraftMedicinePlan[]> {
+    const deletedDraftMedicinePlans = [];
+    for (let plan of draftMedicinePlans) {
+      const canceledPlan = await this.model.findByIdAndUpdate(plan._id, { $set: { status: DraftMedicincePlanStatus.DELETE } }, { new: true })
+      deletedDraftMedicinePlans.push(canceledPlan);
+    }
+    return deletedDraftMedicinePlans;
   }
 }

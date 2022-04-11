@@ -1,5 +1,6 @@
 export enum DraftMedicincePlanStatus {
     CREATED = 'CREATED',
     EDITED = 'EDITED',
-    CANCELED = 'CANCELED'
+    CANCELED = 'CANCELED',
+    DELETE = 'DELETE'
 }

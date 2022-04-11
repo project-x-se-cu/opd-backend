@@ -1,14 +1,15 @@
 import { DraftMedicinePlanDto } from "./draft-medicine-plan.dto";
 import { ApiProperty } from '@nestjs/swagger';
+import { MedicinePlanDto } from "./medicine-plan.dto";
 
 export class PrescriptionDto {
-
-    _id: string;
-
-    status: string;
 
     @ApiProperty({
         type: [DraftMedicinePlanDto]
     })
     draftMedicinePlans: DraftMedicinePlanDto[];
+
+    medicinePlans: MedicinePlanDto[];
+
+    status: string;
 }

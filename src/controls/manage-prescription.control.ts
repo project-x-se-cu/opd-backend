@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  Param,
   Post,
   Put,
   Query
@@ -12,16 +11,14 @@ import { DraftMedicinePlanService } from '../services/draft-medicine-plan.servic
 import { SearchMedicineDto } from '../dtos/search-medicine.dto';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
 import { PrescriptionService } from 'src/services/prescription.service';
-import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { MedicinePlanService } from 'src/services/medicine-plan.service';
-import { Prescription } from 'src/entities/prescription.entity';
 import { DraftMedicinePlan } from 'src/entities/draft-medicine-plan.entity';
 import { MedicinePlanDto } from 'src/dtos/medicine-plan.dto';
-import { PrescriptionStatus } from 'src/enums/presciption-status.enum';
-import { DraftMedicincePlanStatus } from 'src/enums/draft-medicine-plan-status.enum';
 import { InvoiceService } from 'src/services/invoice.service';
 import { InvoiceDto, InvoiceSummary, MedicineFee } from 'src/dtos/invoice.dto';
 import { InvoiceStatus } from 'src/enums/invoice-status.enum';
+import { MedicinePlan } from 'src/entities/medicine-plan.entity';
 
 @ApiTags('Use Case - Issue a prescription')
 @Controller()
@@ -40,58 +37,37 @@ export class ManagePrescriptionControl {
 
   @Post('prescriptions')
   async createPrescription(@Body() createPrescriptionRequest: PrescriptionDto) {
-    const createdPrescription = await this.prescriptionService.create();
-    const createdPrescriptionId = createdPrescription._id.toString();
-    const createdDraftMedicinePlans = await this.draftMedicinePlanService.create(createPrescriptionRequest.draftMedicinePlans, createdPrescriptionId);
-    return this.toPrescriptionResponse(createdPrescriptionId, createdPrescription, createdDraftMedicinePlans);
+    const createdDraftMedicinePlans = await this.draftMedicinePlanService.create(createPrescriptionRequest.draftMedicinePlans);
+    return this.toPrescriptionResponse(createdDraftMedicinePlans);
   }
 
-  @Put('prescriptions/:id')
-  @ApiParam({ name: 'id', required: true })
-  async editPrescription(@Param('id') id: string, @Body() editPrescriptionRequest: PrescriptionDto) {
-    const editedPrescription = await this.prescriptionService.updateStatusById(id, PrescriptionStatus.EDITED);
+  @Put('prescriptions')
+  async editPrescription(@Body() editPrescriptionRequest: PrescriptionDto) {
     const editedDraftMedicinePlans = await this.draftMedicinePlanService.edit(editPrescriptionRequest.draftMedicinePlans);
-    return this.toPrescriptionResponse(id, editedPrescription, editedDraftMedicinePlans);
+    return this.toPrescriptionResponse(editedDraftMedicinePlans);
   }
 
-  toPrescriptionResponse(prescriptionId: string, prescription: Prescription, draftMedicinePlans: DraftMedicinePlan[]): PrescriptionDto {
-    const prescriptionResponse = new PrescriptionDto();
-    prescriptionResponse._id = prescriptionId;
-    prescriptionResponse.status = prescription.status;
-    prescriptionResponse.draftMedicinePlans = draftMedicinePlans;
-    return prescriptionResponse;
+  @Post('prescriptions/cancel')
+  async cancelPrescription(@Body() cancelPrescriptionRequest: PrescriptionDto) {
+    const canceledDraftMedicinePlans = await this.draftMedicinePlanService.cancel(cancelPrescriptionRequest.draftMedicinePlans);
+    return this.toPrescriptionResponse(canceledDraftMedicinePlans);
   }
 
-  @Post('prescriptions/:id/cancel')
-  @ApiParam({ name: 'id', required: true })
-  async cancelPrescription(@Param('id') id: string) {
-    const canceledPrescription = await this.prescriptionService.updateStatusById(id, PrescriptionStatus.CANCELLED);
-    await this.draftMedicinePlanService.updateStatusByPrescriptionId(id, DraftMedicincePlanStatus.CANCELED);
-    return {
-      _id: id,
-      status: canceledPrescription.status
-    };
-  }
-
-  @Post('prescriptions/:id/confirm')
-  @ApiParam({ name: 'id', required: true })
-  async confirmPrescription(@Param('id') id: string) {
-    const confirmedPrescription = await this.prescriptionService.updateStatusById(id, PrescriptionStatus.CONFIRMED);
-    const draftMedicinePlans = await this.draftMedicinePlanService.findByPrescriptionId(id);
+  @Post('prescriptions/confirm')
+  async confirmPrescription(@Body() confirmedPrescriptionRequest: PrescriptionDto) {
+    const createdPrescription = await this.prescriptionService.create();
+    const draftMedicinePlans = await this.draftMedicinePlanService.delete(confirmedPrescriptionRequest.draftMedicinePlans);
     const medicinePlans = draftMedicinePlans.map(plan => 
       this.toMedicinePlan(plan));
-    await this.medicinePlanService.create(medicinePlans, id);
+    await this.medicinePlanService.create(medicinePlans);
+    // TODO Refactor
     const invoice = new InvoiceDto();
     invoice.status = InvoiceStatus.UNPAID;
-    // TODO refactor
     invoice.refId = 'INVOICE#' + Math.floor(1000 + Math.random() * 9000);
-    // TODO set user id
-    invoice.userId = '1';
     const invoiceSummary = new InvoiceSummary();
-    // hard code
     invoiceSummary.serviceFee = 500;
     invoiceSummary.medicineFee = [];
-    let totalPrice = 0;
+    let totalPrice = 500;
     for (let medicinePlan of medicinePlans) {
       let medicineFee = new MedicineFee();
       medicineFee.medicineName = medicinePlan.medicineName;
@@ -104,10 +80,14 @@ export class ManagePrescriptionControl {
     invoice.price = totalPrice;
     invoice.summary = invoiceSummary;
     await this.invoiceService.create(invoice);
-    return {
-      _id: id,
-      status: confirmedPrescription.status
-    };
+    return this.toPrescriptionResponse(draftMedicinePlans, medicinePlans);
+  }
+
+  toPrescriptionResponse(draftMedicinePlans: DraftMedicinePlan[], medicinePlans: MedicinePlan[] = []): PrescriptionDto {
+    const prescriptionResponse = new PrescriptionDto();
+    prescriptionResponse.draftMedicinePlans = draftMedicinePlans;
+    prescriptionResponse.medicinePlans = medicinePlans;
+    return prescriptionResponse;
   }
 
   toMedicinePlan(draftMedicinePlan: DraftMedicinePlan): MedicinePlanDto {
@@ -116,7 +96,6 @@ export class ManagePrescriptionControl {
     medicinePlan.dosageMeals = draftMedicinePlan.dosageMeals;
     medicinePlan.medicineName = draftMedicinePlan.medicineName;
     medicinePlan.amount = draftMedicinePlan.amount;
-    medicinePlan.prescriptionId = draftMedicinePlan.prescriptionId;
     medicinePlan.remark = draftMedicinePlan.remark;
     medicinePlan.status = draftMedicinePlan.status;
     medicinePlan.dosageTimes = draftMedicinePlan.dosageTimes;

@@ -1,10 +1,8 @@
 import {
   Controller,
-  Get,
-  Query
+  Get
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SearchServiceSummaryDto } from 'src/dtos/search-service-summary.dto';
 import { ServiceSummaryDto } from 'src/dtos/service-summary.dto';
 import { Invoice } from 'src/entities/invoice.entity';
 import { InvoiceStatus } from 'src/enums/invoice-status.enum';
@@ -20,8 +18,8 @@ export class ServiceSummaryControl {
   ) { }
 
   @Get('service-summaries')
-  async getServiceSummarryList(@Query() searchServiceSummaryRequest: SearchServiceSummaryDto) {
-    const invoices = await this.invoiceService.findByUserId(searchServiceSummaryRequest.userId);
+  async getServiceSummarryList() {
+    const invoices = await this.invoiceService.findAll();
     const serviceSummaryListResponse = [];
     for (let invoice of invoices) {
       const serviceSummaryResponse = await this.toServiceSummaryResponse(invoice);

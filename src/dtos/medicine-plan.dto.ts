@@ -1,6 +1,6 @@
 export class MedicinePlanDto {
 
-  _id: string;
+  _id?: string;
   
   medicineName: string;
 
@@ -17,6 +17,4 @@ export class MedicinePlanDto {
   remark: string;
 
   status: string;
-
-  prescriptionId: string;
 }

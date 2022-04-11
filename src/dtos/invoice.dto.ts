@@ -21,9 +21,5 @@ export class InvoiceDto {
 
     status: string;
 
-    bank: string;
-
-    userId: string;
-
     summary: InvoiceSummary;
 }

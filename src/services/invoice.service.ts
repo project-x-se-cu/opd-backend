@@ -10,11 +10,11 @@ export class InvoiceService {
     @InjectModel(Invoice.name) private readonly model: Model<InvoiceDocument>,
   ) { }
 
-  async create(invoice: InvoiceDto): Promise<Invoice> {
-    return await this.model.create(invoice);
+  async findAll(): Promise<Invoice[]> {
+    return await this.model.find().exec();
   }
 
-  async findByUserId(userId: string): Promise<Invoice[]> {
-    return await this.model.find({ userId: userId }).exec();
+  async create(invoice: InvoiceDto): Promise<Invoice> {
+    return await this.model.create(invoice);
   }
 }

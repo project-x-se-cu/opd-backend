@@ -37,6 +37,4 @@ export class DraftMedicinePlanDto {
   remark: string;
 
   status: string;
-
-  prescriptionId: string;
 }

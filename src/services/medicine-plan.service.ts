@@ -11,10 +11,9 @@ export class MedicinePlanService {
     @InjectModel(MedicinePlan.name) private readonly model: Model<MedicinePlanDocument>,
   ) { }
 
-  async create(medicinePlans: MedicinePlanDto[], prescriptionId: string): Promise<MedicinePlan[]> {
+  async create(medicinePlans: MedicinePlanDto[]): Promise<MedicinePlan[]> {
     medicinePlans.forEach(plan => {
       plan.status = MedicincePlanStatus.CREATED;
-      plan.prescriptionId = prescriptionId;
     })
     return await this.model.insertMany(medicinePlans);
   }

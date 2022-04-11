@@ -31,9 +31,6 @@ export class Invoice {
   summary: InvoiceSummary;
 
   @Prop()
-  userId: string;
-
-  @Prop()
   createdAt: Date;
 
   @Prop()
