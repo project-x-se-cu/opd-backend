@@ -91,15 +91,15 @@ export class ManagePrescriptionControl {
     invoiceSummary.serviceFee = 500;
     invoiceSummary.medicineFee = [];
     let totalPrice = 0;
-    medicinePlans.forEach(medicinePlan => {
+    for (let medicinePlan of medicinePlans) {
       let medicineFee = new MedicineFee();
       medicineFee.medicineName = medicinePlan.medicineName;
       medicineFee.amount = medicinePlan.amount;
-      // TODO
-      medicineFee.price = medicineFee.amount * 10;
+      const medicine = await this.medicineService.findAll(medicinePlan.medicineName);
+      medicineFee.price = medicineFee.amount * medicine[0].price;
       invoiceSummary.medicineFee.push(medicineFee);
       totalPrice = totalPrice + medicineFee.price;
-    })
+    }
     invoice.price = totalPrice;
     invoice.summary = invoiceSummary;
     await this.invoiceService.create(invoice);

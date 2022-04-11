@@ -14,6 +14,9 @@ export class Medicine {
 
   @Prop()
   properties: string;
+
+  @Prop()
+  price: number;
 }
 
 export const MedicineEntity = SchemaFactory.createForClass(Medicine);
