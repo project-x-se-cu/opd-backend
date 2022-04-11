@@ -3,9 +3,6 @@ class MedicineFee {
     medicineName: string;
 
     amount: number
-
-    totalPrice: string;
-
 }
 
 class Summary {
@@ -20,7 +17,7 @@ export class ServiceSummaryDto {
   
     refId: string;
 
-    amount: number
+    price: number
     
     status: string;
 

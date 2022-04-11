@@ -4,7 +4,7 @@ import { Schema as MongooseSchema } from 'mongoose';
 
 export type InvoiceDocument = Invoice & Document;
 
-export class Summary {
+export class InvoiceSummary {
   @Prop()
   serviceFee: number;
 
@@ -22,13 +22,13 @@ export class Invoice {
   refId: string;
 
   @Prop()
-  amount: number;
+  price: number;
 
   @Prop()
   status: string;
 
   @Prop()
-  summary: Summary;
+  summary: InvoiceSummary;
 
   @Prop()
   userId: string;

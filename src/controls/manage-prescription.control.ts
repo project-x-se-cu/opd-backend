@@ -19,6 +19,8 @@ import { DraftMedicinePlan } from 'src/entities/draft-medicine-plan.entity';
 import { MedicinePlanDto } from 'src/dtos/medicine-plan.dto';
 import { PrescriptionStatus } from 'src/enums/presciption-status.enum';
 import { DraftMedicincePlanStatus } from 'src/enums/draft-medicine-plan-status.enum';
+import { InvoiceService } from 'src/services/invoice.service';
+import { InvoiceDto, InvoiceSummary, MedicineFee } from 'src/dtos/invoice.dto';
 
 @ApiTags('Use Case - Issue a prescription')
 @Controller()
@@ -27,6 +29,7 @@ export class ManagePrescriptionControl {
     private readonly draftMedicinePlanService: DraftMedicinePlanService,
     private readonly medicinePlanService: MedicinePlanService,
     private readonly prescriptionService: PrescriptionService,
+    private readonly invoiceService: InvoiceService
   ) { }
 
   @Get('medicines')
@@ -77,6 +80,26 @@ export class ManagePrescriptionControl {
     const medicinePlans = draftMedicinePlans.map(plan => 
       this.toMedicinePlan(plan));
     await this.medicinePlanService.create(medicinePlans, id);
+    const invoice = new InvoiceDto();
+    // invoice.status = 'UNPAID';
+    // // TODO generate ref id
+    // invoice.refId = 'INVOICE#1';
+    // // TODO set user id
+    // invoice.userId = '1';
+    // const invoiceSummary = new InvoiceSummary();
+    // invoiceSummary.serviceFee = 500;
+    // invoiceSummary.medicineFee = [];
+    // let invoiceAmount = 0;
+    // medicinePlans.forEach(medicinePlan => {
+    //   invoiceAmount = invoiceAmount + medicinePlan.amount;
+    //   let medicineFee = new MedicineFee();
+    //   medicineFee.medicineName = medicinePlan.medicineName;
+    //   medicineFee.amount = medicinePlan.amount;
+    //   medicineFee.totalPrice = 500;
+    //   invoiceSummary.medicineFee.push(medicineFee);
+    // })
+
+    // await this.invoiceService.create();
     return {
       _id: id,
       status: confirmedPrescription.status

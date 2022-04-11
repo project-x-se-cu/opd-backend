@@ -20,7 +20,7 @@ export class ServiceSummaryControl {
 
   @Get('service-summaries')
   async getServiceSummarryList(@Query() searchServiceSummaryRequest: SearchServiceSummaryDto) {
-    const invoices = await this.invoiceService.findByAppointmentId(searchServiceSummaryRequest.userId);
+    const invoices = await this.invoiceService.findByUserId(searchServiceSummaryRequest.userId);
     const serviceSummaryListResponse = [];
     for (let invoice of invoices) {
       const serviceSummaryResponse = await this.toServiceSummaryResponse(invoice);
@@ -32,7 +32,7 @@ export class ServiceSummaryControl {
   async toServiceSummaryResponse(invoice: Invoice): Promise<ServiceSummaryDto> {
     const serviceSummaryResponse = new ServiceSummaryDto();
     serviceSummaryResponse.refId = invoice.refId;
-    serviceSummaryResponse.amount = invoice.amount;
+    serviceSummaryResponse.price = invoice.price;
     serviceSummaryResponse.status = invoice.status;
     serviceSummaryResponse.summary = invoice.summary;
     serviceSummaryResponse.createdAt = invoice.createdAt;
