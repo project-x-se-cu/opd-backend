@@ -16,4 +16,8 @@ export class PrescriptionService {
     prescription.status = PrescriptionStatus.CREATED;
     return await this.model.create(prescription);
   }
+
+  async findAll(): Promise<Prescription[]> {
+    return await this.model.find().exec();
+  }
 }

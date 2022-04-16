@@ -4,12 +4,24 @@ import { ManagePrescriptionControl } from '../controls/manage-prescription.contr
 import { MongooseModule } from '@nestjs/mongoose';
 import { Medicine, MedicineEntity } from '../entities/medicine.entity';
 import { OrderPrescriptionTransactionCoordinator } from './order-prescription-transaction.coordinator';
+import { PrescriptionService } from 'src/services/prescription.service';
+import { ManagePrescriptionStatusControl } from 'src/controls/manage-prescription-status.control';
+import { Prescription, PrescriptionEntity} from 'src/entities/prescription.entity';
 
 @Module({
-  providers: [MedicineService],
-  controllers: [ManagePrescriptionControl],
+  providers: [
+    MedicineService,
+    PrescriptionService
+  ],
+  controllers: [
+    ManagePrescriptionControl,
+    ManagePrescriptionStatusControl
+  ],
   imports: [
-    MongooseModule.forFeature([{ name: Medicine.name, schema: MedicineEntity }]),
+    MongooseModule.forFeature([
+      { name: Medicine.name, schema: MedicineEntity },
+      { name: Prescription.name, schema: PrescriptionEntity}
+    ]),
     OrderPrescriptionTransactionCoordinator
   ],
 })

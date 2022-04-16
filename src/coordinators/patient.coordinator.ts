@@ -5,19 +5,25 @@ import { Reciept, RecieptEntity } from 'src/entities/reciept.entity';
 import { ServiceSummaryControl } from 'src/controls/service-summary.control';
 import { InvoiceService } from 'src/services/invoice.service';
 import { RecieptService } from 'src/services/reciept.service';
+import { PrescriptionService } from 'src/services/prescription.service';
+import { ManagePrescriptionStatusControl } from 'src/controls/manage-prescription-status.control';
+import { Prescription, PrescriptionEntity} from 'src/entities/prescription.entity';
 
 @Module({
   providers: [
     InvoiceService, 
-    RecieptService
+    RecieptService,
+    PrescriptionService
   ],
   controllers: [
-    ServiceSummaryControl
+    ServiceSummaryControl,
+    ManagePrescriptionStatusControl
   ],
   imports: [
     MongooseModule.forFeature([
       { name: Invoice.name, schema: InvoiceEntity },
-      { name: Reciept.name, schema: RecieptEntity }
+      { name: Reciept.name, schema: RecieptEntity },
+      { name: Prescription.name, schema: PrescriptionEntity}
     ])
   ],
 })

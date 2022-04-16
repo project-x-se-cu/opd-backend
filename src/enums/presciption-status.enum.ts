@@ -1,3 +1,4 @@
 export enum PrescriptionStatus {
-    CREATED = 'CREATED'
+    CREATED = 'CREATED',
+    CONFIRMED = 'CONFIRMED'
 }
