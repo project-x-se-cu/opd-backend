@@ -5,6 +5,7 @@ import { Reciept, RecieptEntity } from 'src/entities/reciept.entity';
 import { ServiceSummaryControl } from 'src/controls/service-summary.control';
 import { InvoiceService } from 'src/services/invoice.service';
 import { RecieptService } from 'src/services/reciept.service';
+import { PaymentControl } from 'src/controls/payment.control';
 
 @Module({
   providers: [
@@ -12,7 +13,8 @@ import { RecieptService } from 'src/services/reciept.service';
     RecieptService
   ],
   controllers: [
-    ServiceSummaryControl
+    ServiceSummaryControl,
+    PaymentControl
   ],
   imports: [
     MongooseModule.forFeature([
