@@ -12,4 +12,10 @@ export class PrescriptionDto {
     medicinePlans: MedicinePlanDto[];
 
     status: string;
+
+    @ApiProperty()
+    patientId: string;
+
+    @ApiProperty()
+    doctorId: string;
 }

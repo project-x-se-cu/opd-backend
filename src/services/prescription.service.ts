@@ -11,8 +11,10 @@ export class PrescriptionService {
     @InjectModel(Prescription.name) private readonly model: Model<PrescriptionDocument>,
   ) { }
 
-  async create(): Promise<Prescription> {
+  async create(confirmedPrescriptionRequest: PrescriptionDto): Promise<Prescription> {
     const prescription = new PrescriptionDto();
+    prescription.patientId = confirmedPrescriptionRequest.patientId;
+    prescription.doctorId = confirmedPrescriptionRequest.doctorId;
     prescription.status = PrescriptionStatus.CREATED;
     return await this.model.create(prescription);
   }

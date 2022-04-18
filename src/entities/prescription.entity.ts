@@ -8,6 +8,12 @@ export class Prescription {
 
   @Prop()
   status: string;
+
+  @Prop()
+  patientId: string;
+
+  @Prop()
+  doctorId: string;
 }
 
 export const PrescriptionEntity = SchemaFactory.createForClass(Prescription);

@@ -55,7 +55,7 @@ export class ManagePrescriptionControl {
 
   @Post('prescriptions/confirm')
   async confirmPrescription(@Body() confirmedPrescriptionRequest: PrescriptionDto) {
-    const createdPrescription = await this.prescriptionService.create();
+    const createdPrescription = await this.prescriptionService.create(confirmedPrescriptionRequest);
     const draftMedicinePlans = await this.draftMedicinePlanService.delete(confirmedPrescriptionRequest.draftMedicinePlans);
     const medicinePlans = draftMedicinePlans.map(plan => 
       this.toMedicinePlan(plan));
