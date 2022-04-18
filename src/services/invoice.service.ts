@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { InvoiceDto } from 'src/dtos/invoice.dto';
 import { Invoice, InvoiceDocument } from 'src/entities/invoice.entity';
+import { InvoiceStatus } from 'src/enums/invoice-status.enum';
 
 @Injectable()
 export class InvoiceService {
@@ -16,5 +17,9 @@ export class InvoiceService {
 
   async create(invoice: InvoiceDto): Promise<Invoice> {
     return await this.model.create(invoice);
+  }
+
+  async updateStatus(refId: string, status: InvoiceStatus): Promise<Invoice> {
+    return await this.model.findOneAndUpdate({ refId: refId }, { $set: { status: status } }, { new: true })
   }
 }
