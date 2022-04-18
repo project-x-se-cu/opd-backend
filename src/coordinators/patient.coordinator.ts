@@ -6,6 +6,9 @@ import { ServiceSummaryControl } from 'src/controls/service-summary.control';
 import { InvoiceService } from 'src/services/invoice.service';
 import { RecieptService } from 'src/services/reciept.service';
 import { PaymentControl } from 'src/controls/payment.control';
+import { PrescriptionService } from 'src/services/prescription.service';
+import { ManagePrescriptionStatusControl } from 'src/controls/manage-prescription-status.control';
+import { Prescription, PrescriptionEntity} from 'src/entities/prescription.entity';
 
 @Module({
   providers: [
@@ -15,7 +18,8 @@ import { PaymentControl } from 'src/controls/payment.control';
   ],
   controllers: [
     ServiceSummaryControl,
-    PaymentControl
+    PaymentControl,
+    ManagePrescriptionStatusControl
   ],
   imports: [
     MongooseModule.forFeature([
