@@ -6,17 +6,17 @@ import {
 
 import { ApiTags } from '@nestjs/swagger';
 import { PrescriptionService } from 'src/services/prescription.service';
-import { PrescriptionDto } from 'src/dtos/prescription.dto';
+import { searchPrescriptionDto } from 'src/dtos/search-prescription.dto';
 
 @ApiTags('Use Case - View prescription status')
 @Controller()
 export class ManagePrescriptionStatusControl{
-    constructor(
-        private readonly prescriptionService: PrescriptionService
-    ){}
+  constructor(
+    private readonly prescriptionService: PrescriptionService
+  ){}
 
-    @Get('prescriptions')
-    async getPrescriptionList() {
-    return await this.prescriptionService.findAll();
+  @Get('prescriptions')
+  async getPrescriptionList(@Query() query: searchPrescriptionDto) {
+    return await this.prescriptionService.findAll(query);
   }
 }
