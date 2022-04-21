@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
+import { searchPrescriptionDto } from 'src/dtos/search-prescription.dto';
 import { Prescription, PrescriptionDocument } from 'src/entities/prescription.entity';
 import { PrescriptionStatus } from 'src/enums/presciption-status.enum';
 
@@ -19,7 +20,8 @@ export class PrescriptionService {
     return await this.model.create(prescription);
   }
 
-  async findAll(): Promise<Prescription[]> {
-    return await this.model.find().exec();
+  async findAll(query: searchPrescriptionDto): Promise<Prescription[]> {
+    let queryStr = JSON.stringify(query);
+    return await this.model.find(JSON.parse(queryStr)).exec();
   }
 }
