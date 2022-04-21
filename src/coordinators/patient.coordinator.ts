@@ -9,12 +9,14 @@ import { PaymentControl } from 'src/controls/payment.control';
 import { PrescriptionService } from 'src/services/prescription.service';
 import { ManagePrescriptionStatusControl } from 'src/controls/manage-prescription-status.control';
 import { Prescription, PrescriptionEntity} from 'src/entities/prescription.entity';
+import { TwoCTwoPProxy } from 'src/proxies/2c2p.proxy';
 
 @Module({
   providers: [
     InvoiceService, 
     RecieptService,
-    PrescriptionService
+    PrescriptionService,
+    TwoCTwoPProxy
   ],
   controllers: [
     ServiceSummaryControl,

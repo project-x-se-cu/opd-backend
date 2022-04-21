@@ -7,12 +7,17 @@ import { InvoiceStatus } from 'src/enums/invoice-status.enum';
 
 @Injectable()
 export class InvoiceService {
+
   constructor(
     @InjectModel(Invoice.name) private readonly model: Model<InvoiceDocument>,
   ) { }
 
   async findAll(): Promise<Invoice[]> {
     return await this.model.find().exec();
+  }
+
+  async findByRefId(refId: string) {
+    return await this.model.findOne({ refId: refId }).exec();
   }
 
   async create(invoice: InvoiceDto): Promise<Invoice> {

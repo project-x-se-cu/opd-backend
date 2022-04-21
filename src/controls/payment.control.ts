@@ -20,21 +20,21 @@ export class PaymentControl {
     private readonly twoCtwoPProxy: TwoCTwoPProxy
   ) { }
 
-  @Post('payments/request')
-  async requestPayment(@Body() requestPayment: PaymentDto) {
-    await this.invoiceService.findByRefId(requestPayment.refId);
+  @Post('payments/create')
+  async createPayment(@Body() createPaymentRequest: PaymentDto) {
+    await this.invoiceService.findByRefId(createPaymentRequest.refId);
     this.twoCtwoPProxy.createPayment();
     return { redirectUrl: 'https://2c2p.com' }
   }
 
   @Post('payments')
-  async createPayment(@Body() createPaymentRequest: PaymentDto) {
-    const invoice = await this.invoiceService.updateStatus(createPaymentRequest.refId, InvoiceStatus.PAID);
+  async makePayment(@Body() makePaymentRequest: PaymentDto) {
+    const invoice = await this.invoiceService.updateStatus(makePaymentRequest.refId, InvoiceStatus.PAID);
     const invoiceId = invoice._id.toString();
     const reciept = new RecieptDto();
     reciept.refId = 'RECIEPT#' + Math.floor(1000 + Math.random() * 9000);
     reciept.invoiceId = invoiceId;
-    reciept.bank = createPaymentRequest.bank;
+    reciept.bank = makePaymentRequest.bank;
     return this.recieptService.create(reciept);
   }
 
