@@ -39,29 +39,29 @@ export class PaymentControl {
     reciept.invoiceId = invoiceId;
     reciept.bank = makePaymentRequest.bank;
     const createdReciept = await this.recieptService.create(reciept);
-    this.notifyPatient();
-    this.notifyDoctor();
-    this.notifyPharmacist();
+    this.notifyPatient(invoiceId);
+    this.notifyDoctor(invoiceId);
+    this.notifyPharmacist(invoiceId);
     return createdReciept;
   }
 
-  notifyPatient() {
+  notifyPatient(invoiceId: string) {
     const notification = new NotificationDto();
-    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว';
+    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + invoiceId;
     notification.userId = '1';
     this.notificationService.notify(notification);
   }
 
-  notifyDoctor() {
+  notifyDoctor(invoiceId: string) {
     const notification = new NotificationDto();
-    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว';
+    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + invoiceId;
     notification.userId = '2';
     this.notificationService.notify(notification);
   }
 
-  notifyPharmacist() {
+  notifyPharmacist(invoiceId: string) {
     const notification = new NotificationDto();
-    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว';
+    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + invoiceId;
     notification.userId = '3';
     this.notificationService.notify(notification);
   }

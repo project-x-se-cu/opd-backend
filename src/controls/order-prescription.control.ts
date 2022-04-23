@@ -68,7 +68,7 @@ export class OrderPrescriptionTransactionControl {
     invoice.summary = invoiceSummary;
     await this.invoiceService.create(invoice);
     const notification = new NotificationDto();
-    notification.message = 'กรุณาชำระค่าบริการ';
+    notification.message = 'กรุณาชำระค่าบริการ เลขที่ใบแจ้งหนี้: ' + invoice.refId;
     notification.userId = '1';
     await this.notificationService.notify(notification);
     return this.toPrescriptionResponse(draftMedicinePlans, medicinePlans);
