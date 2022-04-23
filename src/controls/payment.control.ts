@@ -47,7 +47,7 @@ export class PaymentControl {
 
   notifyPatient(invoiceId: string) {
     const notification = new NotificationDto();
-    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + invoiceId;
+    notification.message = 'ชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + invoiceId;
     notification.userId = '1';
     this.notificationService.notify(notification);
   }
