@@ -7,7 +7,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { NotificationService } from 'src/services/notification.service';
 
 @ApiTags('Use Case - Issue a prescription')
-@Controller('notification')
+@Controller('notifications')
 export class NotificationControl {
   constructor(private readonly notificationService: NotificationService) { }
 
