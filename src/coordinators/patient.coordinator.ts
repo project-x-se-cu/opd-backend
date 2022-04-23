@@ -10,13 +10,16 @@ import { PrescriptionService } from 'src/services/prescription.service';
 import { ManagePrescriptionStatusControl } from 'src/controls/manage-prescription-status.control';
 import { Prescription, PrescriptionEntity} from 'src/entities/prescription.entity';
 import { TwoCTwoPProxy } from 'src/proxies/2c2p.proxy';
+import { NotificationService } from 'src/services/notification.service';
+import { Notification, NotificationEntity } from 'src/entities/notification.entity';
 
 @Module({
   providers: [
     InvoiceService, 
     RecieptService,
     PrescriptionService,
-    TwoCTwoPProxy
+    TwoCTwoPProxy,
+    NotificationService
   ],
   controllers: [
     ServiceSummaryControl,
@@ -27,7 +30,8 @@ import { TwoCTwoPProxy } from 'src/proxies/2c2p.proxy';
     MongooseModule.forFeature([
       { name: Invoice.name, schema: InvoiceEntity },
       { name: Reciept.name, schema: RecieptEntity },
-      { name: Prescription.name, schema: PrescriptionEntity}
+      { name: Prescription.name, schema: PrescriptionEntity},
+      { name: Notification.name, schema: NotificationEntity}
     ])
   ],
 })

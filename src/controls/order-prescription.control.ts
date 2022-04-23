@@ -3,12 +3,14 @@ import {
 } from '@nestjs/common';
 import { InvoiceDto, InvoiceSummary, MedicineFee } from 'src/dtos/invoice.dto';
 import { MedicinePlanDto } from 'src/dtos/medicine-plan.dto';
+import { NotificationDto } from 'src/dtos/notification-dto';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
 import { DraftMedicinePlan } from 'src/entities/draft-medicine-plan.entity';
 import { MedicinePlan } from 'src/entities/medicine-plan.entity';
 import { InvoiceStatus } from 'src/enums/invoice-status.enum';
 import { InvoiceService } from 'src/services/invoice.service';
 import { MedicinePlanService } from 'src/services/medicine-plan.service';
+import { NotificationService } from 'src/services/notification.service';
 import { PrescriptionService } from 'src/services/prescription.service';
 import { DraftMedicinePlanService } from '../services/draft-medicine-plan.service';
 import { MedicineService } from '../services/medicine.service';
@@ -19,7 +21,8 @@ export class OrderPrescriptionTransactionControl {
     private readonly draftMedicinePlanService: DraftMedicinePlanService,
     private readonly medicinePlanService: MedicinePlanService,
     private readonly prescriptionService: PrescriptionService,
-    private readonly invoiceService: InvoiceService
+    private readonly invoiceService: InvoiceService,
+    private readonly notificationService: NotificationService
   ) { }
 
   async createPrescription(createPrescriptionRequest: PrescriptionDto) {
@@ -64,6 +67,10 @@ export class OrderPrescriptionTransactionControl {
     invoice.price = totalPrice;
     invoice.summary = invoiceSummary;
     await this.invoiceService.create(invoice);
+    const notification = new NotificationDto();
+    notification.message = 'กรุณาชำระค่าบริการ';
+    notification.userId = '1';
+    await this.notificationService.notify(notification);
     return this.toPrescriptionResponse(draftMedicinePlans, medicinePlans);
   }
 
