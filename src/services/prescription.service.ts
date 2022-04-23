@@ -22,6 +22,6 @@ export class PrescriptionService {
 
   async findAll(query: searchPrescriptionDto): Promise<Prescription[]> {
     let queryStr = JSON.stringify(query);
-    return await this.model.find(JSON.parse(queryStr)).exec();
+    return await this.model.find(JSON.parse(queryStr)).sort('-createdAt').exec();
   }
 }
