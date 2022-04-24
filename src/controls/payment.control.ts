@@ -39,29 +39,29 @@ export class PaymentControl {
     reciept.invoiceId = invoiceId;
     reciept.bank = makePaymentRequest.bank;
     const createdReciept = await this.recieptService.create(reciept);
-    this.notifyPatient(invoiceId);
-    this.notifyDoctor(invoiceId);
-    this.notifyPharmacist(invoiceId);
+    this.notifyPatient(makePaymentRequest.refId);
+    this.notifyDoctor(makePaymentRequest.refId);
+    this.notifyPharmacist(makePaymentRequest.refId);
     return createdReciept;
   }
 
-  notifyPatient(invoiceId: string) {
+  notifyPatient(refId: string) {
     const notification = new NotificationDto();
-    notification.message = 'ชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + invoiceId;
+    notification.message = 'ชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + refId;
     notification.userId = '1';
     this.notificationService.notify(notification);
   }
 
-  notifyDoctor(invoiceId: string) {
+  notifyDoctor(refId: string) {
     const notification = new NotificationDto();
-    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + invoiceId;
+    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + refId;
     notification.userId = '2';
     this.notificationService.notify(notification);
   }
 
-  notifyPharmacist(invoiceId: string) {
+  notifyPharmacist(refId: string) {
     const notification = new NotificationDto();
-    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + invoiceId;
+    notification.message = 'ผู้ป่วยชำระค่าบริการเรียบร้อยแล้ว เลขที่ใบแจ้งหนี้: ' + refId;
     notification.userId = '3';
     this.notificationService.notify(notification);
   }
