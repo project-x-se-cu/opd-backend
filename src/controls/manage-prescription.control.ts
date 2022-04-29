@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Inject,
   Post,
   Put,
   Query
@@ -10,12 +11,13 @@ import { ApiTags } from '@nestjs/swagger';
 import { PrescriptionDto } from 'src/dtos/prescription.dto';
 import { MedicineService } from 'src/services/medicine.service';
 import { SearchMedicineDto } from '../dtos/search-medicine.dto';
-import { OrderPrescriptionTransactionControl } from './order-prescription.control';
+import { IOrderPrescriptionTransactionControl, ORDER_PRESCRIPTION_TRANSACTION_CONTROL } from './i-order-prescription-transaction.control';
 
 @ApiTags('Use Case - Issue a prescription')
 @Controller()
 export class ManagePrescriptionControl {
-  constructor(private readonly orderPrescriptionTransactionControl: OrderPrescriptionTransactionControl,
+  constructor( 
+    @Inject(ORDER_PRESCRIPTION_TRANSACTION_CONTROL) private readonly orderPrescriptionTransactionControl: IOrderPrescriptionTransactionControl,
     private readonly medicineService: MedicineService
   ) { }
 
@@ -26,7 +28,7 @@ export class ManagePrescriptionControl {
 
   @Post('prescriptions')
   async createPrescription(@Body() createPrescriptionRequest: PrescriptionDto) {
-    return await this.orderPrescriptionTransactionControl.createPrescription(createPrescriptionRequest);
+    return await this.orderPrescriptionTransactionControl.createPrescriptionRequest(createPrescriptionRequest);
   }
 
   @Put('prescriptions')
@@ -34,13 +36,13 @@ export class ManagePrescriptionControl {
     return await this.orderPrescriptionTransactionControl.editPrescription(editPrescriptionRequest);
   }
 
-  @Post('prescriptions/cancel')
-  async cancelPrescription(@Body() cancelPrescriptionRequest: PrescriptionDto) {
-    return await this.orderPrescriptionTransactionControl.cancelPrescription(cancelPrescriptionRequest);
-  }
-
   @Post('prescriptions/confirm')
   async confirmPrescription(@Body() confirmedPrescriptionRequest: PrescriptionDto) {
     return await this.orderPrescriptionTransactionControl.confirmPrescription(confirmedPrescriptionRequest);
+  }
+
+  @Post('prescriptions/cancel')
+  async cancelPrescription(@Body() cancelPrescriptionRequest: PrescriptionDto) {
+    return await this.orderPrescriptionTransactionControl.cancelPrescription(cancelPrescriptionRequest);
   }
 }

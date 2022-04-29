@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ORDER_PRESCRIPTION_TRANSACTION_CONTROL } from 'src/controls/i-order-prescription-transaction.control';
 import { ManagePrescriptionStatusControl } from 'src/controls/manage-prescription-status.control';
 import { ManagePrescriptionControl } from 'src/controls/manage-prescription.control';
 import { NotificationControl } from 'src/controls/notification.control';
@@ -13,7 +14,7 @@ import { InvoiceService } from 'src/services/invoice.service';
 import { MedicinePlanService } from 'src/services/medicine-plan.service';
 import { NotificationService } from 'src/services/notification.service';
 import { PrescriptionService } from 'src/services/prescription.service';
-import { OrderPrescriptionTransactionControl } from '../controls/order-prescription.control';
+import { OrderPrescriptionTransactionControl } from '../controls/order-prescription-transaction.control';
 import { Medicine, MedicineEntity } from '../entities/medicine.entity';
 import { MedicineService } from '../services/medicine.service';
 
@@ -25,7 +26,10 @@ import { MedicineService } from '../services/medicine.service';
     MedicinePlanService,
     PrescriptionService,
     InvoiceService,
-    OrderPrescriptionTransactionControl,
+    {
+      provide: ORDER_PRESCRIPTION_TRANSACTION_CONTROL,
+      useClass: OrderPrescriptionTransactionControl
+    },
     NotificationService
   ],
   controllers: [
