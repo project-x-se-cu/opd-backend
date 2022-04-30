@@ -10,15 +10,21 @@ import { UserLoginDto } from 'src/dtos/user-login.dto';
 import { VerifyOTPDto } from 'src/dtos/verify-otp.dto';
 import { ProfileService } from 'src/services/profile.service';
 import { compare } from 'bcrypt';
+import { AWSSNSProxy } from 'src/proxies/AWSSNS.proxy';
 
 @ApiTags('Use Case - Login')
 @Controller('profile')
 export class ProfileSessionManagementControl {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(
+    private readonly profileService: ProfileService,
+    private readonly awsSNSProxy: AWSSNSProxy,
+  ) {}
 
   @Post('login')
   async login(@Body() loginRequest: UserLoginDto) {
-    const profile = await this.profileService.findProfileByUsername(loginRequest);
+    const profile = await this.profileService.findProfileByUsername(
+      loginRequest,
+    );
     if (!profile) {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
@@ -31,10 +37,11 @@ export class ProfileSessionManagementControl {
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     }
 
-    const { otpExpireAt, _id } = await this.profileService.createOTP(
+    const { otpExpireAt, _id, otp } = await this.profileService.createOTP(
       profile._id.toString(),
     );
 
+    this.awsSNSProxy.sendOTPEmail(otp, profile.emailAddress)
     return { otpExpireAt, _id };
   }
 

@@ -16,6 +16,9 @@ export class Profile {
   password: string;
 
   @Prop()
+  emailAddress: string;
+
+  @Prop()
   role: string;
 
   @Prop()
