@@ -20,12 +20,16 @@ export class ProfileService {
     current.setMinutes(current.getMinutes() + 1);
 
     return this.model
-      .findByIdAndUpdate(profileId, {
-        $set: {
-          otp: ('00000' + Math.random() * 1000).slice(-6),
-          otpExpireAt: current,
+      .findByIdAndUpdate(
+        profileId,
+        {
+          $set: {
+            otp: ('00000' + Math.floor(Math.random() * 1000000)).slice(-6),
+            otpExpireAt: current,
+          },
         },
-      })
+        { new: true },
+      )
       .exec();
   }
 
